@@ -87,7 +87,7 @@ def add(a, b):
 함수 선언 아래에 다음과 같은 주석을 삽입합니다.
 
 ```python
-def add(a, b):
+def add(a:int, b:int) -> int:
     """
     Adds two integers and returns the result.
 
@@ -99,6 +99,10 @@ def add(a, b):
         int: The sum of the two integers
     """
     return a + b
+
+print(add.__name__)
+print(add.__annotations__)
+print(add.__doc__)
 ```
 
 6. subtract, multiply, divide 함수도 구현해 본다.
@@ -257,14 +261,22 @@ Event -> EventActions
     import json
     json.dumps(CapitalInfoOutput.model_json_schema(), indent=2)
 ```
-* instruction이 없어도 잘 동작한다.
-* instruction에서 구체적으로 input/output format을 명시하지 않아도 처리가 잘되는 것을 알 수 있다.
+```python
+    input_schema=CountryInput,
+    output_schema=CapitalInfoOutput,
+    output_key="output",
+    include_contents='none',  # 이전 대화의 내용은 포함하지 않음
+```
 ```python
     instruction="사용자가 요청한 국가에 대한 수도를 답변합니다."
 ```
+* instruction이 없어도 잘 동작한다.
+* instruction에서 구체적으로 input/output format을 명시하지 않아도 처리가 잘되는 것을 알 수 있다.
 
 ## T7. code_agent
 * BuiltInCodeExecutor를 사용하는 코딩 에이전트를 만들어 보자.
+    - BuiltInCodeExecutor는 Gemini2에서만 지원된다.
+    
 ```python
 from google.adk.code_executors import BuiltInCodeExecutor
 
