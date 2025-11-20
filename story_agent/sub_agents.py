@@ -1,7 +1,7 @@
 from google.adk.agents import Agent
 from google.adk.tools import exit_loop
 
-GEMINI_MODEL = "gemini-2.0-flash"
+GEMINI_MODEL = "gemini-2.5-flash"
 
 initial_writer_agent = Agent(
     name="InitialWriterAgent",

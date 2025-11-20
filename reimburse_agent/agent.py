@@ -12,7 +12,7 @@ from google.adk.agents import Agent
 from google.adk.tools import LongRunningFunctionTool
 
 root_agent = Agent(
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
     name="reimbursement_agent",
     instruction="""
         당신은 직원의 환급 프로세스를 처리하는 에이전트입니다.

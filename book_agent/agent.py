@@ -8,6 +8,6 @@ client = QdrantClient()
 
 root_agent = Agent(
     name="book_agent",
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
     instruction="사용자의 베스트셀러에 관한 질문에 답하세요.",
 )

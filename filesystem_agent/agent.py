@@ -19,6 +19,6 @@ filesystem_toolset = MCPToolset(
 from google.adk.agents import Agent
 
 root_agent = Agent(
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
     name="filesystem_agent",
 )
