@@ -18,4 +18,9 @@ class LambdaAgent(BaseAgent):
     async def _run_async_impl(
         self, ctx: InvocationContext
     ) -> AsyncGenerator[Event, None]:
-        yield Event(author=self.name, invocation_id=ctx.invocation_id)
+        inputs = [ctx.session.state[key] for key in self.input_keys]
+        output = self.func(*inputs)
+        
+        yield Event(author=self.name, invocation_id=ctx.invocation_id,
+                    content=ModelContent(str(output)),
+                    actions=EventActions(state_delta={self.output_key: output} if self.output_key else {}))

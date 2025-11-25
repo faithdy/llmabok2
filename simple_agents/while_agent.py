@@ -16,5 +16,12 @@ class WhileAgent(BaseAgent):
     async def _run_async_impl(
         self, ctx: InvocationContext
     ) -> AsyncGenerator[Event, None]:
-        yield Event(author=self.name, invocation_id=ctx.invocation_id)
+        running = True
+        while running:
+            for agent in self.sub_agents:
+                running = eval(self.condition, {}, ctx.session.state)
+                if not running: break
+
+                async for event in agent.run_async(ctx):
+                    yield event
 
