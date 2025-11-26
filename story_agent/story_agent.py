@@ -2,6 +2,7 @@ from typing_extensions import override
 from typing import AsyncGenerator, Optional
 from google.adk.agents import BaseAgent, InvocationContext
 from google.adk.events import Event
+from google.adk.agents import LoopAgent
 
 class StoryAgent(BaseAgent):
     """
@@ -22,3 +23,12 @@ class StoryAgent(BaseAgent):
         async for event in self.generator.run_async(ctx):
             yield event
 
+        for iteration in range(self.max_iterations):
+            async for event in self.generator.run_async(ctx):
+                yield event
+            
+            if event.content.parts[0].text == "No major issues found.":
+                break
+
+            async for event in self.generator.run_async(ctx):
+                yield event

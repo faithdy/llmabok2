@@ -10,3 +10,25 @@ points=[
     PointStruct(id=4, vector=[4, -4], payload={"planet": "Jupiter"}),
     PointStruct(id=5, vector=[6, 4], payload={"planet": "Saturn"}),
 ]
+
+client= QdrantClient(url="http://localhost:6333")
+
+if not client.collection_exists("planets"):
+    client.create_collection(
+        collection_name="planets",
+        vectors_config=VectorParams(size=2, distance=Distance.COSINE),
+    )
+
+    client.upsert(
+        collection_name="planets",
+        points=points
+    )
+
+search_result = client.query_points(
+    collection_name="planets",
+    query=[2, 1],
+    limit=3,
+)
+
+for point in search_result.points:
+    print(f"Point ID: {point.id}, Planet: {point.payload['planet']}")
